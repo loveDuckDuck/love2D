@@ -36,7 +36,7 @@ function Director:new(stage, player)
 	self.enemy_to_points = {
 		["Rock"] = 1,
 		["Shooter"] = 2,
-		["BigRock"] = 2
+		["BigRock"] = 1
 	}
 
 	self.resource_to_points = {
@@ -80,11 +80,11 @@ function Director:setEnemySpawnsForThisRound()
 	local points = self.difficulty_to_points[self.difficulty]
 	local function getEnemyDamage(enemy)
 		if enemy == "Rock" then
-			return 100 + self.difficulty * 2
+			return 10 + self.difficulty * 2
 		elseif enemy == "Shooter" then
-			return 150 + self.difficulty * 3
+			return 15 + self.difficulty * 3
 		elseif enemy == "BigRock" then
-			return 259 + self.difficulty * 4
+			return 20 + self.difficulty * 4
 		else
 			return 10
 		end

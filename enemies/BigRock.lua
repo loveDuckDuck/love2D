@@ -6,7 +6,7 @@ function BigRock:new(area, x, y, opts)
 	local direction = table.random({ -1, 1 })
 	-- self.x = GW / 2 + direction * (GW / 2 + 48)
 	-- self.y = math.customRandom(16, GH - 16)
-	self.collider = self.area.world:newPolygonCollider(CreateIrregularPolygon(16,16))
+	self.collider = self.area.world:newPolygonCollider(CreateIrregularPolygon(16))
 	self.collider:setPosition(self.x, self.y)
 	self.collider:setObject(self)
 	self.collider:setCollisionClass("Enemy")
@@ -15,6 +15,7 @@ function BigRock:new(area, x, y, opts)
 	self.velocity = -direction * math.customRandom(20, 40)
 	self.collider:setLinearVelocity(self.velocity, 0)
 	self.collider:applyAngularImpulse(math.customRandom(-100, 100))
+		self.graphics_types = { 'amber' }
 
 	-- Calculate width and height from collider points
 	-- get the points of the polygon shape, insert in a table, like a like
@@ -68,7 +69,7 @@ end
 function BigRock:destroy()
     BigRock.super.destroy(self)
     for i =1 , math.random(6,12) do
-        self.area:addGameObject("Rock", self.x, self.y)
+        self.area:addGameObject("Rock", love.math.random(0, GW), love.math.random(0, GH))
     end
 end
 

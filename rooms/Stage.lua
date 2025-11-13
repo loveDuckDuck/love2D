@@ -44,6 +44,7 @@ function Stage:new()
 
 	self.main_canvas = love.graphics.newCanvas(GW, GH)
 	self.rgbShiftCanvas = love.graphics.newCanvas(GW, GH)
+	self.amberCanvas = love.graphics.newCanvas(GW, GH)
 
 	self.rgb_shift = love.graphics.newShader('resource/shaders/rgbShift.frag')
 	self.rgb_shift_mag = 2.5
@@ -53,6 +54,7 @@ function Stage:new()
 	self.amberShader = love.graphics.newShader('resource/shaders/amber.frag')
 	self.crtShader = love.graphics.newShader('resource/shaders/crtShader.frag')
 	self.shutterShader = love.graphics.newShader('resource/shaders/shutter.frag')
+	self.amberShader  = love.graphics.newShader('resource/shaders/amber.frag')
 
 	self.heightTransitionCanvas = 1
 	self.menu_canvas = love.graphics.newCanvas(GW, GH)
@@ -203,10 +205,21 @@ function Stage:drawMain()
 	love.graphics.setCanvas(self.main_canvas)
 	love.graphics.clear()
 	GCamera:attach(0, 0, GW, GH)
-	self.area:drawExcept({ 'rgb_shift' })
+	self.area:drawExcept({ 'rgb_shift', 'amber' })
 	GCamera:detach()
 	love.graphics.setCanvas()
 end
+
+
+function Stage:drawAmber()
+	love.graphics.setCanvas(self.amberCanvas)
+	love.graphics.clear()
+	GCamera:attach(0, 0, GW, GH)
+	self.area:drawOnly({ 'amber' })
+	GCamera:detach()
+	love.graphics.setCanvas()
+end
+
 
 function Stage:draw()
 	if not self.player then
@@ -244,8 +257,11 @@ function Stage:draw()
 	love.graphics.setBlendMode('alpha')
 end
 
+
+
 function Stage:drawGameStage()
 	self:drawRGBShift()
+	self:drawAmber()
 	self:drawMain()
 
 	love.graphics.setCanvas(self.final_canvas)

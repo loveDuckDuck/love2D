@@ -30,8 +30,8 @@ function Player:new(area, x, y, opts)
 	self.isBounce = false
 
 	-- HP
-	self.hp = 70
-	self.max_hp = 70
+	self.hp = 100
+	self.max_hp = 100
 
 	--BOOST ABILTY
 	self.boost = 1
@@ -205,12 +205,16 @@ end
 function Player:removeHP(amount)
 	self.hp = self.hp - (amount or 5)
 	if self.hp <= 0 then
+		print(self.hp)
 		self.hp = 0
 		self:die()
 	end
 end
 
 function Player:hit(damage)
+
+	print("Player hit for " .. tostring(damage) .. " damage.")
+
 	if self.invincible then
 		return
 	end
@@ -221,7 +225,7 @@ function Player:hit(damage)
 	end
 	self:removeHP(damage)
 
-	if damage >= 30 then
+	if damage >= 15 then
 		self.invincible = true
 		self.timer:after("invincibility", 2, function()
 			self.invincible = false
